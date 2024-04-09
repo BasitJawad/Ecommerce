@@ -1,0 +1,133 @@
+#checkbox {
+    display: none;
+  }
+  .toggle {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: none; /* Initially hide toggle on all screen sizes */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition-duration: .5s;
+  }
+  
+  .bars {
+    width: 100%;
+    height: 4px;
+    background-color: black;
+    border-radius: 4px;
+  }
+  
+  #bar2 {
+    transition-duration: .8s;
+  }
+  
+  #bar1,#bar3 {
+    width: 70%;
+  }
+  
+  #checkbox:checked + .toggle .bars {
+    position: absolute;
+    transition-duration: .5s;
+  }
+  
+  #checkbox:checked + .toggle #bar2 {
+    transform: scaleX(0);
+    transition-duration: .5s;
+  }
+  
+  #checkbox:checked + .toggle #bar1 {
+    width: 100%;
+    transform: rotate(45deg);
+    transition-duration: .5s;
+  }
+  
+  #checkbox:checked + .toggle #bar3 {
+    width: 100%;
+    transform: rotate(-45deg);
+    transition-duration: .5s;
+  }
+  
+  #checkbox:checked + .toggle {
+    transition-duration: .5s;
+    transform: rotate(180deg);
+  }
+  
+  /* Media query for small screens */
+  @media (max-width: 768px) {
+    .toggle {
+      display: flex; /* Display toggle only on small screens */
+    }
+  
+    .navbar-collapse {
+      display: block; /* Initially hide navbar collapse content */
+      transition: display 2s ease-in; /* Smooth transition for display */
+    }
+  
+    #checkbox:checked + .toggle + .navbar-collapse {
+      display: block; /* Display navbar collapse content when toggle is checked */
+      transition: display 5s ease-in; /* Smooth transition for display */
+
+    }
+  }
+
+  .underline  {
+    position: relative;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .underline:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: black; /* Adjust color as needed */
+    transition: width 0.3s ease;
+  }
+  
+  .underline:hover:after {
+    width: 100%;
+  }
+
+
+
+.backimg h2{
+  /* background-image: url("../assets/OuterSpace.jpg"); */  
+  text-transform: uppercase;
+  background-image: url('../assets/OuterSpace.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-clip: text;
+  background-attachment: fixed;
+  color: transparent;
+
+}
+
+.fixedImage{
+  background-color: rgb(242, 249, 255);
+}
+.logout-btn{
+  position: relative;
+  text-align: center;
+}
+.logout-btn:hover {
+  box-shadow: 0 0 10px 0px red; /* Adjusted box-shadow values */
+  text-shadow: 0 0 20px white; /* Adjusted box-shadow values */
+  transition:text-shadow, box-shadow 0.3s ease; /* Added transition for smoother effect */
+}
+.Same-btn {
+  position: relative; /* Ensure proper positioning of the text shadow */
+  text-align: center;
+}
+
+.Same-btn:hover {
+  box-shadow: 0 0 10px 0px black; /* Adjusted box-shadow values */
+  text-shadow: 0 0 40px  black;
+  transition: text-shadow 0.3s ease, box-shadow 0.3s ease; /* Added transition for smoother effect */
+}

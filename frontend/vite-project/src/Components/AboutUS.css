@@ -1,0 +1,21 @@
+.About_Me{
+    
+    font-weight: 700;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+    text-wrap: wrap;
+    font-variant: small-caps;
+    font-size: larger;
+    word-spacing: 10px;
+}
+.MyImage{
+    min-width: 100%;
+    }
+    .smaller-image {
+        max-width: 100%;
+        height: auto;
+        max-height: 250px; /* Adjust this value as needed */
+        margin: 0 auto; /* Center the image horizontally */
+        margin-bottom: 20px; /* Add space after the image */
+      }
+      

@@ -1,0 +1,12 @@
+.Loader #load{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    #load img{
+        width: 10rem;
+        height: 10rem;
+    }
+.Loader{
+    min-height: 100%;
+}

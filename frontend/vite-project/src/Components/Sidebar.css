@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  border-right: 1px solid rgb(243, 239, 239);
+  border-left: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 400;
+}
+
+.category:hover {
+  cursor: pointer !important;
+}
+.menu h6 {
+  font-size: 25px;
+}
+.pro {
+  zoom: 0.8; /* Adjust the value as needed */
+}
+
+.list-item .btn {
+  border: 0.1px solid rgb(243, 237, 237);
+}
+
+.list-item .btn:hover {
+  background-color: rgb(159, 248, 218);
+}
+
+@media screen and (min-width: 768px) {
+  .sidebar .menu {
+      display: flex !important;
+      justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar .menu {
+      display: none !important;
+  }
+  .sidebar .content {
+      display: block; /* Change from inline-flex to block */
+  }
+}

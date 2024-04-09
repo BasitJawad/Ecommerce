@@ -1,0 +1,41 @@
+/* Add this CSS to your stylesheet */
+.body {
+    background-color: #f8f9fa;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+  }
+  
+  .description {
+    margin-top: 20px;
+  }
+  
+  .price {
+    font-size: 20px;
+    color: #28a745;
+  }
+  
+  .brand {
+    font-size: 18px;
+    color: #6c757d;
+  }
+  
+  .id {
+    font-size: 16px;
+    color: #6c757d;
+  }
+  
+  .button {
+    margin-top: 20px;
+  }
+  
+  .fa-shopping-cart {
+    font-size: 18px;
+  }
+  
