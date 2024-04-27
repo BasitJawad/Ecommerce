@@ -42,7 +42,7 @@ Order Processing:
 
 When a user initiates a purchase, the order details are compiled and sent via email using Nodemailer.
 Admin Operations:
-
+<a href="https://app.daily.dev/basitjawad"><img src="https://api.daily.dev/devcards/v2/C2lHFtX2SEwDQ2IUdOsst.png?type=default&r=w0z" width="356" alt="Basit Jawad's Dev Card"/></a>
 Admins can log in to manage products, view orders, and handle user accounts.
 Future Enhancement: Display Admin's Uploaded Products on Admin Page
 
