@@ -5,6 +5,8 @@ import Textarea from "@mui/joy/Textarea";
 import { useState } from "react";
 import axios from "axios"; // Import Axios
 import { useNavigate } from "react-router-dom"; 
+import toast, { Toaster } from 'react-hot-toast';
+
 const AdminPageBody = () => {
   const [amount, setAmount] = useState("");
   const [priceOfProduct, setPrice] = useState("");
@@ -27,6 +29,7 @@ const AdminPageBody = () => {
     })
     .then(response => {
           setImage(response.data);
+          toast.success(response.data)
       // Optionally, handle success response
     })
     .catch(error => {
@@ -90,6 +93,7 @@ const AdminPageBody = () => {
 
   return (
     <>
+    <Toaster/>
       {/* Admin Page Header  Starts*/}
       <div className="container min-vh-100 shadow">
         <div className="row">

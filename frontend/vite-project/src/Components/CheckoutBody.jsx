@@ -3,7 +3,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import toast,{Toaster} from 'react-hot-toast';
 const CheckoutBody = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,8 +44,10 @@ const CheckoutBody = () => {
       .post('/api/SendToMail', formData)
       .then((res) => {
         console.log('Data sent successfully', res.data);
-        alert(res.data.message);
-
+        toast(' Product Purchased!',{
+          icon:"🎁"
+        });
+          
         // Navigate to ProductPage after 2 seconds
         setTimeout(() => {
           navigate('/Products');
@@ -53,7 +55,9 @@ const CheckoutBody = () => {
       })
       .catch((err) => {
         console.log('Data send failed', err);
-        alert(err.data.message);
+        toast(err.message,{
+          icon:"🔌"
+        })
       });
   };
 
@@ -63,6 +67,7 @@ const CheckoutBody = () => {
 
   return (
     <>
+  <Toaster/>
       <div className="container">
         <div className="row min-vh-100">
           <div className="col-12 d-flex justify-content-center align-items-center">

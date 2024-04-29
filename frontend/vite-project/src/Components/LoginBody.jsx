@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
+import toast, { Toaster } from 'react-hot-toast';
 const LoginBody = () => {
     const navigate = useNavigate();
     const [login, setLogin] = useState({
@@ -36,15 +36,15 @@ const LoginBody = () => {
                             name:res.data.name
                         }
                     })
-                    alert("Logged In");
+                   toast.success("Logged In Successfully")
                 } else {
                     console.log("Token not found in response");
-                    alert("Not an authorized user");
+                    toast.error("Not an Authorized User")
                 }
             })
             .catch((err) => {
                 console.log("Error with code: ", err);
-                alert("Not an authorized user");
+                toast.error("Server Error");
             });
     };
 
@@ -56,6 +56,7 @@ const LoginBody = () => {
 
     return (
         <>
+            <Toaster/>
             <div className="container-fluid ">
                 <div className="row">
                     <div className="col-lg-5 d-grid justify-content-center mb-lg-5">

@@ -39,7 +39,7 @@ const storage = multer.diskStorage({
       return cb(null, file.fieldname + "_"+Date.now()+path.extname(file.originalname));
     },
   });
-  const upload = multer({ storage: storage }).single("ProductImage");
+  const upload = multer({ storage: storage,limits: { fileSize: 1024 * 1024 * 5 } }).single("ProductImage");
   
 // Picture Upload
 app.get('/',(req, res)=>{
@@ -137,8 +137,8 @@ app.post("/api/reset", async (req, res) => {
                 text: `Hi! ${ResetEmail.name} 🎇`, // plain text body
                 html: `    <h1 style="text-align: center;" >EXCLUSIVE <br><br>We received your query for <u><b><i>Password Reset</i></b></u></h1></br>
                            <h4 style="text-align:center">👍 To Reset your password 👍<br> Please click on the button</h4>
-                           <div class="button" style="display: flex; justify-content: center;">
-                           <a href="${resetLink}" style="text-decoration: none; color: black;"> <button style="cursor: pointer; background-color: rgb(173, 212, 199);" ><h2> Reset Password</h2></button></a> </div>                                            
+                           <div class="button">
+                           <a href="${resetLink}" style="text-decoration: none; color: black; display:flex; justify-content:center;"> <button style="cursor: pointer;" ><h2> Reset Password</h2></button></a> </div>                                            
                 `, // html body
             });
 
@@ -257,7 +257,7 @@ app.post("/api/ProductUpload", upload, async (req, res) => {
 
     const result = await newProduct.save();
     console.log(result);
-    res.status(200).send("Product Uploaded Successfully");
+    res.status(201).send("Product Uploaded Successfully");
   } catch (error) {
     console.log("Could not upload product: ", error);
     res.status(500).send("Internal Server Error");
@@ -345,6 +345,9 @@ app.delete('/api/productsDelete/:id', async (req, res) => {
   }
 });
 // Product Delete Section
+
+
+
 app.post('/api/SendToMail', async (req, res) => {
   const { firstName, lastName, emailAddress, homeAddress, phoneNumber, product } = req.body;
 
@@ -410,10 +413,10 @@ app.post('/api/SendToMail', async (req, res) => {
     });
 
     console.log("Message sent: %s", info.messageId);
-    res.status(200).json({ message: "Check your Gmail for the Information, an email has been sent to you" });
+    res.status(200).json({ message: "Product Purchased, Please check your Gmail" });
   } catch (error) {
     console.error("Error processing SendToMail:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({error:"Internal Server Error"});
   }
 });
 

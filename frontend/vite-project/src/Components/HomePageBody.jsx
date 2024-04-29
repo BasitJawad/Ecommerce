@@ -39,8 +39,8 @@ const HomePageBody = () => {
      data-aos-offset="500"
      data-aos-duration="500">
 
-       <section className='min-vh-100 pb-5 section-bg-1 mt-5 shadow border-dark'>
-        <div className="container">
+       <section className='min-vh-100 pb-5 section-bg-1 mt-5 shadow border-dark' >
+        <div className="container " >
           <div className="row mb-5 " style={{ height: "30rem" }}>
             <div className="col-lg-5 col-md-12 details d-flex flex-column gap-3 justify-content-center align-items-start">
               <div className="heading "><h1 className='fw-bold'>Special Offer Today <br />Men Best Shoes Collection</h1></div>

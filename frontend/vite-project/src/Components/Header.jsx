@@ -53,7 +53,7 @@ const Header = ({onSearch}) => {
             ) : (
               <Nav.Link href="/Login" className="Same-btn rounded-4 ">   <b className='underline'> Login  </b> </Nav.Link>
             )}
-            <Nav.Link href="/SignUp" className="Same-btn rounded-4">   <b className='underline'> SignUp  </b> </Nav.Link>
+            {/* <Nav.Link href="/SignUp" className="Same-btn rounded-4">   <b className='underline'> SignUp  </b> </Nav.Link> */}
 
           </Nav>
           <Form className="d-flex">

@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from "axios"
+import toast, { Toaster } from 'react-hot-toast';
 export const ResetBody = () => {
 
     const [reset,setReset] = useState("");
@@ -25,12 +26,16 @@ const onSubmits = (e) => {
   e.preventDefault()
   axios.post('/api/reset',reset).then((res)=>{
     if(res.status ===200){
-      alert("Request Submitted");
+      toast('Request Submitted!', {
+        icon: '📩',
+      });
       navigate("/NewPasswordPage")
     }
   }).catch((err)=>{
     if(err.status ===401){
-      alert("Record Not Found")
+      toast('Record Not Found', {
+        icon: '🪹',
+      });
     }
     
   })
@@ -40,6 +45,7 @@ const onSubmits = (e) => {
 
   return (
    <>
+   <Toaster/>
    <div className="container min-vh-100 ">
     <div className="row vh-100">
       <div className="col d-lg-grid d-sm-grid align-content-lg-center m-auto align-content-sm-center justify-content-lg-center justify-content-sm-center">

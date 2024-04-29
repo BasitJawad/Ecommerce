@@ -4,6 +4,7 @@ import Footer from './Footer';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 const ManageProducts = () => {
     const [show, setShow] = useState(false);
     const [products, setProducts] = useState([]);
@@ -38,7 +39,7 @@ const ManageProducts = () => {
             const response = await axios.delete(`/api/productsDelete/${productId}`);
             // Handle response as needed
             if(response.status === 200) {
-                alert(response.data);
+               toast.success(response.data)
                 console.log(response);
             }
         } catch (error) {
@@ -53,6 +54,7 @@ const ManageProducts = () => {
 
     return (
         <>
+            <Toaster/>
             {show ? (
                 <>
                     <Header />

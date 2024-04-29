@@ -20,7 +20,7 @@ const Routing = () => {
             <Routes>
                 <Route path='/' element={<HomePage />} />
                 <Route path='/About' element={<About />} />
-                <Route path='/SignUp' element={<SignUp />} />
+                {/* <Route path='/SignUp' element={<SignUp />} /> */}
                 <Route path='/Login' element={<Login />} />
                 <Route path='/ResetPage' element={<ResetPage />} />
                 <Route path='/Products' element={<Products />} />
@@ -29,7 +29,6 @@ const Routing = () => {
                 <Route path='/ProtectedRoute' element={<ProtectedRoute />} />
                 <Route path='/ManageProducts' element={<Protected Component={ManageProducts} />} />
                 <Route path='/Checkout' element={<Checkout />} />
-
                 <Route path='/*' element={<NotSupported />} />
             </Routes>
         </BrowserRouter>
