@@ -24,14 +24,14 @@ const Port = process.env.PORT
 const EMAIL=process.env.EMAIL
 const PASSWORD = process.env.PASSWORD
 
-
 // Express json()
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
-app.use('/public/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 // Picture Upload
 const storage = multer.diskStorage({
+  
     destination: function (req, file, cb) {
       return cb(null, "./public/uploads");
     },
@@ -96,7 +96,7 @@ app.post("/api/Login", async (req, res) => {
       const token = jwt.sign({ _id: userEmail._id }, process.env.JWT_SECRET, { expiresIn: '10s' });
       res.cookie('token', token, { expires: new Date(Date.now() + 10000), httpOnly: true }); // Set token in cookie
       console.log("User Successfully Logged In", token );
-      res.status(200).json({token,name:userEmail.name});
+      res.status(200).json({token,name:userEmail.name,email:userEmail.email});
   } catch (error) { 
       console.log("Error is : " + error);
       res.status(500).send("Internal Server Error");
@@ -161,7 +161,7 @@ app.post('/api/v1/resetPassword/:token', async (req, res) => {
     const confirmPassword = req.body.ConfirmPassword;
     
     const hashedPassword = await bcrypt.hash(newPassword,6);
-    if (newPassword === confirmPassword ) {
+    if (newPassword === confirmPassword  ) {
             try{
             const User =await SignUp.findOneAndUpdate({ token: token}, {$set: {password: hashedPassword}, $unset:{token:1}},{new:true})
             if(User){
@@ -217,6 +217,7 @@ app.post("/api/ProductUpload", upload, async (req, res) => {
       ProductPrice,
       ProductAmount,
       ProductDescription,
+      email,
       category // Assuming this is the category name
     } = req.body;
 
@@ -251,7 +252,8 @@ app.post("/api/ProductUpload", upload, async (req, res) => {
       productPrice: ProductPrice,
       productAmount: ProductAmount,
       productDescription: ProductDescription,
-      productPictures: [productPicture], // Since it's an array in the schema
+      productPictures: [productPicture],
+      UploaderEmail:email, // Since it's an array in the schema
       category: existingCategory._id, // Use the ObjectId of the existing category
     });
 
@@ -279,11 +281,12 @@ app.get('/api/ProductRetrieve', async (req, res) => {
       productPrice: 1,
       productAmount: 1,
       productDescription: 1,
+      UploaderEmail:1,
       productPictures: 1, // Include ProductPicture field
       category: 1,
       _id: 1,
     })
-    .sort({ productPrice: 1 })
+    .sort({ productName: 1 })
     .populate("category", "categoryName")
     .populate("productPictures", "image");
     
@@ -350,7 +353,7 @@ app.delete('/api/productsDelete/:id', async (req, res) => {
 
 app.post('/api/SendToMail', async (req, res) => {
   const { firstName, lastName, emailAddress, homeAddress, phoneNumber, product } = req.body;
-
+  console.log(product.email)
   try {
     // Validate required fields
     if (!firstName || !lastName || !emailAddress || !homeAddress || !phoneNumber || !product || !product.id) {
@@ -386,10 +389,16 @@ app.post('/api/SendToMail', async (req, res) => {
         pass: PASSWORD,
       },
     });
+    // const server = "muhbasit235@gmail.com"
+    // const toEmails = `${emailAddress}`;
+    const adminEmail = "muhbasit235@gmail.com";
+    const uploaderEmail = product.email; // Assuming this is the uploader's email from the product details
+    const toEmails = `${emailAddress}, ${uploaderEmail}, ${adminEmail}`;
 
-    const toEmails = `${emailAddress}, muhbasit235@gmail.com`;
+
+
     const info = await transporter.sendMail({
-      from: "muhbasit235@gmail.com",
+      from: 'cocobasit665@gmail.com',
       to: toEmails,
       subject: `Your Product Shipping Detail`,
       html: `
@@ -404,9 +413,10 @@ app.post('/api/SendToMail', async (req, res) => {
           <li><strong>Product Id:</strong> ${product.id}</li>
             <li><strong>Product Name:</strong> ${product.name}</li>
             <li><strong>Product Brand:</strong> ${product.brand}</li>
-            <li><strong>Product Description:</strong> ${product.description}</li>
             <li><strong>Product Amount:</strong> ${product.amount}</li>
             <li><strong>Product Price:</strong> ${product.price}</li>
+            <li><strong>Product Description:</strong> ${product.description}</li>
+
           </ul>
         </div>
       `,

@@ -6,7 +6,7 @@ import { useLocation ,useNavigate } from 'react-router-dom';
 const ProductDetailBody = () => {
   const location  = useLocation();
   const navigate = useNavigate();
-  const { id, img, name, brand, description, amount, price } = location.state || {};
+  const { id, img, name, brand, description, amount, price,email } = location.state || {};
 
   const handleTransfer = ()=>{
     navigate('/Checkout',{
@@ -17,7 +17,8 @@ const ProductDetailBody = () => {
         brand:       brand,
         price:        price * amount,
         amount:      amount,
-        description: description
+        description: description,
+        email: email
    
       }
     })
@@ -31,6 +32,7 @@ const ProductDetailBody = () => {
             <img src={img} alt="Product" loading='lazy'  style={{ width: '100%', maxWidth: '300px' }} />
           </div>
           <div className="col-lg-7 col-md-6 d-flex justify-content-center align-items-start flex-column gap-3 shadow "style={{ scrollBehavior: 'smooth',scrollSnapAlign: 'start' }}>
+            
             <div className="name"><h2>{name}</h2></div>
             <div className="id"><strong>Product ID : </strong><h6>{id}</h6></div>
             <div className="brand"><strong>Brand:</strong> {brand}</div>

@@ -8,6 +8,7 @@ import ProductCard from '../Components/ProductBodyCard/ProductCard';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -32,7 +33,9 @@ const Products = () => {
         if (res.status === 200) {
           setProducts(res.data.products);
         } else if (res.status === 204) {
-          alert(res.data);
+          toast.error("No products available",{
+            icon:"🛒"
+          });
         } else {
           console.log("Something else happened");
         }
@@ -58,10 +61,13 @@ const Products = () => {
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
+  document.title = "ProductsPage"
+  const titleOfPage = document.title
 
   return (
     <>
-      <Header onSearch={setSearchQuery} />
+    <Toaster />
+    <Header onSearch={setSearchQuery} title={titleOfPage} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-2 col-md-2">
@@ -79,6 +85,7 @@ const Products = () => {
                     desc={product.productDescription}
                     price={product.productPrice}
                     amount={product.productAmount}
+                    email={product.UploaderEmail}
                   />
                 </div>
               ))

@@ -32,14 +32,14 @@ const ProductCard = (props) => {
         brand: props.brand,
         price: newPrice * amount,
         amount: amount,
-        description: props.desc
+        description: props.desc,
+        email: props.email
       }
     });
     console.log("Product ID : ", props.id)
   };
 
-
-  const ImageURL = `http://localhost:3000/public/uploads/${props.URL}`;
+  const ImageURL = `http://localhost:3000/uploads/${props.URL}`;
   return (
     <div className="container p-5">
       <div className="card shadow" style={{ width: '18rem' }}>
@@ -56,7 +56,7 @@ const ProductCard = (props) => {
             <div className="col-4">
               <TextField
                 type="number"
-                label="Amount"
+                label="Quantity"
                 variant="outlined"
                 size="small"
                 value={amount}
@@ -70,7 +70,7 @@ const ProductCard = (props) => {
           </div>
           <div className="row">
             <div className="col-8 d-flex justify-content-center ms-4">
-              <Button variant="contained" style={{ background: 'green' }} onClick={handleAddToCart} className='mb-3'>ADD TO CART</Button>
+              <Button variant="contained" style={{ background: 'green' }} onClick={handleAddToCart} className='mb-3'>Buy Now</Button>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { Navbar, Container, Nav, Form, FormControl, Button } from 'react-bootstr
 import './Checkbox.css'; // Import CSS file for styling
 import SearchIcon from '@mui/icons-material/Search';
 
-const Header = ({onSearch}) => {
+const Header = ({onSearch,title}) => {
   const [isChecked, setIsChecked] = useState(false);
   const [searchResult, serSearchResult] = useState([]);
 
@@ -45,21 +45,26 @@ const Header = ({onSearch}) => {
         </div>
         <Navbar.Collapse id="basic-navbar-nav" className={isChecked ? "show" : ""}>
           <Nav className="me-auto">
+            {sessionStorage.getItem('token') ? (
+              <Nav.Link variant="link" onClick={handleLogout} className='bg-danger rounded  rounded-4 logout-btn link-underline-opacity-10-hover'> <b className='text-light'> LogOut    </b></Nav.Link>
+            ) : (
+              <>
             <Nav.Link href="/" className="Same-btn rounded-4">        <b className='underline'> Home    </b> </Nav.Link>
             <Nav.Link href="/Products"className="Same-btn rounded-4"><b className='underline'> Products</b> </Nav.Link>
             <Nav.Link href="/About"className="Same-btn rounded-4">   <b className='underline'> About   </b> </Nav.Link>
-            {sessionStorage.getItem('token') ? (
-              <Nav.Link variant="link" onClick={handleLogout} className='bg-danger rounded rounded-4 logout-btn link-underline-opacity-10-hover'> <b className='text-light'> LogOut    </b></Nav.Link>
-            ) : (
+
               <Nav.Link href="/Login" className="Same-btn rounded-4 ">   <b className='underline'> Login  </b> </Nav.Link>
+              <Nav.Link href="/SignUp" className="Same-btn rounded-4">   <b className='underline'> SignUp  </b> </Nav.Link>
+              </>
             )}
-            {/* <Nav.Link href="/SignUp" className="Same-btn rounded-4">   <b className='underline'> SignUp  </b> </Nav.Link> */}
 
           </Nav>
-          <Form className="d-flex">
-            <FormControl type="search" placeholder="Search" className="me-2 border border-black " aria-label="Search" onChange={handleChange} />
-          </Form>
-        </Navbar.Collapse>
+
+          {title === "ProductsPage" && (
+            <Form className="d-flex">
+              <FormControl type="search" placeholder="Search" className="me-2 border border-black " aria-label="Search" onChange={handleChange} />
+            </Form>
+          )}        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

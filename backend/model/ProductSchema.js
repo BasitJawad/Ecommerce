@@ -12,9 +12,15 @@ const Category = mongoose.model('Category', categorySchema);
 const productPictureSchema = mongoose.Schema({
     image: {
         type: String,
-        required: true
-    }
-});
+        required: true,
+        validate: {
+            validator: function(value) {
+                // Check if the value ends with one of the specified image file extensions
+                return /\.(jpg|jpeg|png)$/i.test(value);
+            },
+            message: 'Image must be in JPG, JPEG, or PNG format'
+        }
+    }});
 
 const ProductSchema = mongoose.Schema({
     productName: {
@@ -23,11 +29,14 @@ const ProductSchema = mongoose.Schema({
         minlength: [3, "Product name must be at least 3 characters long"],
         trim: true
     },
+    UploaderEmail:{
+        type: String
+    },
     productBrand: {
         type: String,
         enum: [
-            'DELL', 'LENOVO', 'APPLE', 'HP', 'ACER', 'TOSHIBA', 'BATA', 'NIKES', 'SETVIS', 'POWER',
-            'SPORTS','REEBOK','PUMA', 'KHAADI', 'GUL-AHMAD', 'JUNAID-JAMSHAID', 'BAREEZ', 'SANA-SAFINAZ'
+            'DELL', 'LENOVO', 'APPLE', 'HP', 'ACER', 'TOSHIBA','IPHONE','SAMSUNG','OPPO','REDMI','HUAWEI','TECNO','NOKIA', 'BATA', 'NIKES', 'SETVIS', 'POWER',
+            'SPORTS','REEBOK','PUMA', 'KHAADI', 'GUL-AHMAD', 'BONANZA', 'BAREEZ', 'SANA-SAFINAZ'
         ]
     },
     productPrice: {
@@ -42,7 +51,7 @@ const ProductSchema = mongoose.Schema({
     },
     productDescription: {
         type: String,
-        maxlength: [300, "Product description should not exceed 300 characters"],
+        maxlength: [3000, "Product description should not exceed 3000 characters"],
         required: [true, "Product description is required"]
     },
     productPictures: [productPictureSchema], // Allow storing an array of product pictures

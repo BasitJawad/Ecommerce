@@ -5,7 +5,7 @@ import {ResetBody} from '../Components/PasswordResetBody'
 const ResetPage = () => {
   return (
     <>
-     <Header />
+    
      <ResetBody />
 
     </>

@@ -3,14 +3,14 @@ const validator = require('validator');
 
 const SignUpSchema = new mongoose.Schema({
     name :{
-        type: 'string',
+        type:String,
         minlength:[3,"name must be 3 characters long"],
         maxlength:20,
         trim:true,
         required: true
     },
     email:{
-        type: 'string',
+        type:String,
         required:true,
         unique:true,
         validate(value){

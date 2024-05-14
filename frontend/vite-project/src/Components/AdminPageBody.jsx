@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Textarea from "@mui/joy/Textarea";
 import { useState } from "react";
 import axios from "axios"; // Import Axios
-import { useNavigate } from "react-router-dom"; 
+import { useLocation, useNavigate } from "react-router-dom"; 
 import toast, { Toaster } from 'react-hot-toast';
 
 const AdminPageBody = () => {
@@ -17,6 +17,12 @@ const AdminPageBody = () => {
   const [file,setFile] = useState()  
   const [image,setImage]= useState()
   const navigate = useNavigate()
+  const location = useLocation()
+  // const [Auth, setAuth]= useState()
+
+  const {email} = location.state 
+  console.log(email)
+
   // Title
   document.title = "Admin Page";
 
@@ -60,15 +66,20 @@ const AdminPageBody = () => {
     setElecFormType(false);
     setShoesFormType(false);
   };
- const handleProducts=()=>{
-  navigate('/ManageProducts');
- }
-
+  const handleProducts = () => {
+    navigate('/ManageProducts', {
+      state: {
+        email: email,
+      },
+    });
+  };
 
 
   const buttonColor = {
     background: "#DB4444",
   };
+
+
 
   const handleAmount = (e) => {
     const val = e.target.value;
@@ -79,6 +90,7 @@ const AdminPageBody = () => {
       setAmount(0);
     }
   };
+
 
   const handlePrice = (e) => {
     const price = e.target.value;
@@ -155,6 +167,7 @@ const AdminPageBody = () => {
                     const selectedBrand = formData.get("brand"); // Get selected brand
                     formData.set("ProductBrand", selectedBrand); // Set brand in formData
                     formData.set('ProductImage',file)
+                    formData.set('email',email); 
                     sendDataToBackend(formData);
                   }}
                 >
@@ -178,10 +191,17 @@ const AdminPageBody = () => {
                       <option value="HP">HP</option>
                       <option value="ACER">ACER</option>
                       <option value="TOSHIBA">TOSHIBA</option>
+                      <option value="IPHONE">IPHONE</option>
+                      <option value="TECNO">TECNO</option>
+                      <option value="SAMSUNG">SAMSUNG</option>
+                      <option value="HUAWEI">HUAWEI</option>
+                      <option value="REDMI">REDMI</option>
+                      <option value="OPPO">OPPO</option>
+                      <option value="NOKIA">NOKIA</option>
                     </select>
                     <br />
                     <Textarea className="mt-3" placeholder="Enter Product Description......" required name="ProductDescription" minRows={3} sx={{ mb: 1 }} />
-                    <i className="fas fa-dollar-sign mt-4 text-danger"></i>{" "}
+                    <i className=" fas fa-rupee-sign  mt-4 text-danger"></i>{" "}
                     <TextField type="number" label="Product Price" variant="standard" onChange={handlePrice} value={priceOfProduct} name="ProductPrice" />
                     <br />
                     <i className="fa fa-database mt-4 text-danger" aria-hidden="true"></i>{" "}
@@ -215,6 +235,7 @@ const AdminPageBody = () => {
                   const selectedBrand = formData.get("brand"); // Get selected brand
                   formData.set("ProductBrand", selectedBrand); // Set brand in formData
                   formData.set('ProductImage',file)
+                  formData.set('email', email); // Add email to form data
                   sendDataToBackend(formData);
                 }}
               >
@@ -234,7 +255,7 @@ const AdminPageBody = () => {
                     <option value="">------Select------</option>
                     <option value="KHAADI">KHAADI</option>
                     <option value="GUL-AHMAD">GUL-AHMAD</option>
-                    <option value="JUNAID-JAMSHAID">JUNAID-JAMSHAID</option>
+                    <option value="BONANZA">BONANZA</option>
                     <option value="BAREEZ">BAREEZ</option>
                     <option value="SANA-SAFINAZ">SANA-SAFINAZ</option>
                   </select>
@@ -275,6 +296,7 @@ const AdminPageBody = () => {
                   const selectedBrand = formData.get("brand"); // Get selected brand
                   formData.set("ProductBrand", selectedBrand); // Set brand in formData
                   formData.set('ProductImage',file)
+                  formData.set('email', email); // Add email to form data
                   sendDataToBackend(formData);
                 }}
               >

@@ -27,16 +27,19 @@ const LoginBody = () => {
             .then((res) => {
                 if (res.status === 200 && res.data.token) {
                     const token = res.data.token;
+                    const name = res.data.name;
+
                     console.log("Token:", token);
                     // Set token in cookie with expiration time of 1 hour
                     // Set token in sessionStorage
                     sessionStorage.setItem('token', token);
                     navigate('/ProtectedRoute',{
                         state: {
-                            name:res.data.name
+                            name:res.data.name,
+                            email:res.data.email
                         }
                     })
-                   toast.success("Logged In Successfully")
+                   toast.success(`Welcome ${name}`)
                 } else {
                     console.log("Token not found in response");
                     toast.error("Not an Authorized User")

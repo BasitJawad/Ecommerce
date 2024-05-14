@@ -3,10 +3,13 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Header from '../Header';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const PasswordChange = () => {
     const { token } = useParams();
+    const navigate = useNavigate()
     const [newPassword, setNewPassword] = useState({
         NewPassword: '',
         ConfirmPassword: ''
@@ -39,19 +42,35 @@ const PasswordChange = () => {
 
     const Submit = (e) => {
         e.preventDefault();
+    
+        // Check if newPassword fields are empty
+        if (!newPassword.NewPassword || !newPassword.ConfirmPassword) {
+            toast.error("Please fill in all password fields.");
+            return;
+        }
+    
+        // Check if newPassword and confirmPassword match
+        if (newPassword.NewPassword !== newPassword.ConfirmPassword) {
+            toast.error("Passwords do not match.");
+            return;
+        }
+
         try {
             axios.post(`/api/v1/resetPassword/${token}`, newPassword).then((res) => {
                 if (res.status === 201) {
-                    alert(res.data);
+                    toast.success(res.data);
+                    setTimeout(()=>{
+                        navigate("/Login");
+                    },2000)
                 } else {
-                    alert('Could not Reset Password');
+                    toast.error("Couldn't change password");
                 }
             });
         } catch (error) {
             alert('Password Reset Failed or : ' + error.message);
         }
     };
-
+    
     const buttonColor = {
         background: '#DB4444',
         width: '50%'
@@ -59,7 +78,8 @@ const PasswordChange = () => {
 
     return (
         <>
-            <Header />
+        <Toaster/>
+          
             <div className="container-fuild">
                 <div className="row d-flex justify-content-center mt-5 pt-5 ">
                     <div className="col-5 col-sm-5 mt-5 text-center shadow p-5 ">

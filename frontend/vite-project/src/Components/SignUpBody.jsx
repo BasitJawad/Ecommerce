@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
 import axios from "axios"
+import toast, { Toaster } from 'react-hot-toast';
 
 const SignUpBody = () => {
     const navigate = useNavigate();
@@ -26,12 +27,12 @@ const SignUpBody = () => {
         axios.post("/api/SignUp", signUp)
             .then((res) => {
                 console.log("Successfully sent the data to the server: " + JSON.stringify(res.data));
-                alert("Successfully Signed Up!");
+                toast.success("Successfully Signed Up!");
                 navigate("/Login");
             })
             .catch((error) => {
                 if (error.response.status === 409) {
-                    alert("User already signed up");
+                    toast.error("User already signed up");
                 } else {
                     console.log("Error with code: " + error);
                 }
@@ -48,6 +49,7 @@ const SignUpBody = () => {
   return (
     
     <>
+    <Toaster/>
     <div className="container-fluid ">
         <div className="row">
 

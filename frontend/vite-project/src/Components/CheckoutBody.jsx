@@ -3,7 +3,8 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
-import toast,{Toaster} from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+
 const CheckoutBody = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,7 +17,9 @@ const CheckoutBody = () => {
     phoneNumber: ''
   });
 
-  const { id, img, name, brand, description, amount, price } = location.state || {};
+  const [errors, setErrors] = useState({});
+
+  const { id, img, name, brand, description, amount, price,email } = location.state || {};
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,141 +29,119 @@ const CheckoutBody = () => {
     }));
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!form.firstName) {
+      newErrors.firstName = 'First Name is required';
+    }
+
+    if (!form.lastName) {
+      newErrors.lastName = 'Last Name is required';
+    }
+
+    const gmailPattern =  /^[a-zA-Z]+(\.[a-zA-Z]+)*[0-9]{0,9}@gmail\.com$/;;
+    if (!form.emailAddress || !gmailPattern.test(form.emailAddress)) {
+      newErrors.emailAddress = 'Email must be a valid @gmail.com address';
+    }
+
+    if (!form.homeAddress) {
+      newErrors.homeAddress = 'Home Address is required';
+    }
+
+    const phoneRegex = /^\d{11}$/;
+    if (!form.phoneNumber || !phoneRegex.test(form.phoneNumber) || form.phoneNumber.startsWith('+92')) {
+      newErrors.phoneNumber = 'Valid 11-digit Phone Number is required and should not start with +92';
+    }
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleClick = () => {
+    if (!validateForm()) {
+      toast("Please fill all fields correctly", { icon: '🔌' });
+      return;
+    }
+
     const formData = {
       ...form,
       product: {
         id,
-        img: img,
-        name: name,
-        brand: brand,
-        description: description,
-        amount: amount,
-        price: price
+        img,
+        name,
+        brand,
+        description,
+        amount,
+        price,
+        email
       }
     };
 
-    axios
-      .post('/api/SendToMail', formData)
+    axios.post('/api/SendToMail', formData)
       .then((res) => {
         console.log('Data sent successfully', res.data);
-        toast(' Product Purchased!',{
-          icon:"🎁"
-        });
-          
-        // Navigate to ProductPage after 2 seconds
-        setTimeout(() => {
-          navigate('/Products');
-        }, 2000);
+        toast('Product Purchased!', { icon: '🎁' });
+        setTimeout(() => navigate('/Products'), 2000);
       })
       .catch((err) => {
         console.log('Data send failed', err);
-        toast(err.message,{
-          icon:"🔌"
-        })
+        toast("Failed to send data", { icon: '🔌' });
       });
   };
 
-  const buttonColor = {
-    background: '#DB4444'
-  };
+  const buttonColor = { background: '#DB4444' };
 
   return (
     <>
-  <Toaster/>
+      <Toaster />
       <div className="container">
         <div className="row min-vh-100">
-          <div className="col-12 d-flex justify-content-center align-items-center">
-            <div className="col-6">
+          <div className="col-12 col-md-6 d-flex justify-content-center align-items-center">
+            <div className="col">
               <ul className="list-unstyled">
-                <li>
-                  <img src={img} className="w-50" alt="Product" />
+                <li><img src={img} style={{ aspectRatio: "3/4", width: "32%" }} alt="Product" /></li>
+                <li className='pt-4' style={{ lineHeight: "20px" }}>
+                  <h6 style={{ color: 'red' }}>Product ID: <small style={{ color: 'black' }}>{id}</small></h6>
                 </li>
-                <li>
-                  <h2>
-                    Product ID: <strong style={{ color: 'red' }}>{id}</strong>{' '}
-                  </h2>{' '}
-                </li>
-                <li>
-                  <h2>
-                    Product Name: <strong style={{ color: 'red' }}>{name}</strong>{' '}
-                  </h2>{' '}
-                </li>
-                <li>
-                  <h2>
-                    Product Brand: <strong style={{ color: 'red' }}>{brand}</strong>{' '}
-                  </h2>{' '}
-                </li>
-                <li>
-                  <h2>
-                    Product Description: <strong style={{ color: 'red' }}>{description}</strong>{' '}
-                  </h2>{' '}
-                </li>
-                <li>
-                  <h2>
-                    Product Amount: <strong style={{ color: 'red' }}>{amount}</strong>{' '}
-                  </h2>{' '}
-                </li>
-                <li>
-                  <h2>
-                    Product Price: <strong style={{ color: 'red' }}>{price}</strong>{' '}
-                  </h2>{' '}
-                </li>
+                <li><h6 style={{ color: 'red' }}>Product Name: <small style={{ color: 'black' }}>{name}</small></h6></li>
+                <li><h6 style={{ color: 'red' }}>Product Brand: <small style={{ color: 'black' }}>{brand}</small></h6></li>
+                <li><h6 style={{ color: 'red' }}>Product Amount: <small style={{ color: 'black' }}>{amount}</small></h6></li>
+                <li><h6 style={{ color: 'red' }}>Product Price: <small style={{ color: 'red' }}>{price}</small></h6></li>
+                <li><h6 style={{ color: 'red' }}>Product Description: <small style={{ color: 'black' }}>{description}</small></h6></li>
               </ul>
             </div>
-            <div className="col-6 form d-flex flex-column gap-3 shadow m-5 p-5">
+          </div>
+          <div className="col-12 col-md-6 d-flex justify-content-center align-items-center">
+            <div className="col form shadow m-5 p-5">
               <TextField
-                id="standard-basic-1"
-                required
-                fullWidth
-                name="firstName"
-                onChange={handleChange}
-                label="Enter your First Name"
-                variant="standard"
+                required fullWidth name="firstName" onChange={handleChange}
+                label="Enter your First Name" variant="standard"
+                error={!!errors.firstName} helperText={errors.firstName}
               />
               <TextField
-                id="standard-basic-2"
-                required
-                fullWidth
-                name="lastName"
-                onChange={handleChange}
-                label="Enter your Last Name"
-                variant="standard"
+                required fullWidth name="lastName" onChange={handleChange}
+                label="Enter your Last Name" variant="standard"
+                error={!!errors.lastName} helperText={errors.lastName}
               />
               <TextField
-                id="standard-basic-3"
-                required
-                fullWidth
-                name="emailAddress"
-                onChange={handleChange}
-                label="Enter your Email Address"
-                variant="standard"
+                required fullWidth name="emailAddress" onChange={handleChange}
+                label="Enter your Email Address" variant="standard"
+                error={!!errors.emailAddress} helperText={errors.emailAddress}
               />
               <TextField
-                id="standard-basic-4"
-                required
-                fullWidth
-                name="homeAddress"
-                onChange={handleChange}
-                label="Enter your Home Address with City and District"
-                variant="standard"
+                required fullWidth name="homeAddress" onChange={handleChange}
+                label="Enter your Home Address with City and District" variant="standard"
+                error={!!errors.homeAddress} helperText={errors.homeAddress}
               />
               <TextField
-                id="standard-basic-5"
-                required
-                fullWidth
-                name="phoneNumber"
-                onChange={handleChange}
-                label="Enter your Mobile Number"
-                variant="standard"
+                required fullWidth name="phoneNumber" onChange={handleChange}
+                label="Enter your Mobile Number" variant="standard"
+                error={!!errors.phoneNumber} helperText={errors.phoneNumber}
               />
-
               <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                style={buttonColor}
-                onClick={handleClick}
+                type="submit" variant="contained" fullWidth
+                style={buttonColor} onClick={handleClick}
               >
                 Checkout
               </Button>

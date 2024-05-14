@@ -83,6 +83,14 @@ const [brandSelection,setBrandSelection] = useState("")
             <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="TOSHIBA"onClick={handleBrand} >TOSHIBA</button> </li>
             <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="ACER"   onClick={handleBrand} >ACER</button></li>
             <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="LENOVO" onClick={handleBrand} >LENOVO</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="IPHONE"   onClick={handleBrand} >IPHONE</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="REDMI" onClick={handleBrand} >REDMI</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="OPPO"   onClick={handleBrand} >OPPO</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="HUAWEI" onClick={handleBrand} >HUAWEI</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="TECNO"   onClick={handleBrand} >TECNO</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="NOKIA" onClick={handleBrand} >NOKIA</button></li>
+
+
             </ul>    
  : " " }
 
@@ -103,9 +111,9 @@ const [brandSelection,setBrandSelection] = useState("")
         {Clothes ?            <ul className="subBrandClothes ">
             <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="KHAADI"         onClick={handleBrand} >KHAADI</button> </li>
             <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="GUL-AHMAD"      onClick={handleBrand} >GUL-AHMAD</button></li>
-            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="JUNAID-JAMSHAID"onClick={handleBrand} >JUNAID-JAMSHAID</button></li>
-            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="BAREEZ"         onClick={handleBrand} >         BAREEZ</button></li>
-            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="SANA-SAFINAZ"   onClick={handleBrand} >   SANA-SAFINAZ</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="Bonanza"        onClick={handleBrand} >BONANZA</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="BAREEZ"         onClick={handleBrand} >BAREEZ</button></li>
+            <li className="list-item list-unstyled mt-1"><button type="button" className="btn " data-toggle="button" aria-pressed="false" value="SANA-SAFINAZ"   onClick={handleBrand} >SANA-SAFINAZ</button></li>
 
             </ul>
  : " "}
